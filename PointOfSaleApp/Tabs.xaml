@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="DB_A3.Tabs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DB_A3"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <TabControl Canvas.Left="228" Canvas.Top="117" Height="450" Width="800" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabItem Header="Place New Order" >
+            <Canvas>
+                <Label Content="Current Branch: " Canvas.Left="481" Canvas.Top="10" ToolTip = "You can select a branch in Settings tab"/>
+                <ComboBox x:Name="branchSelection" Text="" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="160" Canvas.Left="601" Canvas.Top="13" SelectionChanged="branchSelection_Selected">
+                    <!--<ComboBoxItem>St. Jacobs</ComboBoxItem>
+                    <ComboBoxItem>Waterloo</ComboBoxItem>
+                    <ComboBoxItem>Cambridge Mall</ComboBoxItem>
+                    <ComboBoxItem>Sports World</ComboBoxItem>-->
+                </ComboBox>
+                <!--<Label Name="lblCurrentBranch" Content="please select" Canvas.Left="56" Canvas.Top="13" ToolTip = "You can select a branch in Settings tab"/>-->
+
+
+                <Label Canvas.Left="56" Canvas.Top="57">
+                    <Bold>Available Products</Bold>
+                </Label>
+                <ListBox Name="productList" Height="275" Canvas.Left="56" Canvas.Top="87" Width="285">
+                    <ListBoxItem Name="firstItem">
+                    </ListBoxItem>
+                </ListBox>
+                <Button Content="Add Selected" Canvas.Left="266" Canvas.Top="378" Width="75" Click="addProduct_Click"/>
+
+
+                <Label Canvas.Left="447" Canvas.Top="57">
+                    <Bold>Current Order</Bold>
+                </Label>
+                <ListBox Name="orderList" Height="275" Canvas.Left="447" Canvas.Top="87" Width="285"></ListBox>
+                <Label Canvas.Left="447" Canvas.Top="374">
+                    <Bold>Subtotal:</Bold>
+                </Label>
+                <Label Name="lblSubtotal" Height="26" Width="62" Canvas.Left="513" Canvas.Top="374" Content="$0.00"/>
+                <Button Content="Checkout" Canvas.Left="657" Canvas.Top="378" Width="75" Click="checkoutButton_Click"/>
+                <Button Name="discardOrderButton" Content="Discard Order" Canvas.Left="56" Canvas.Top="16" Width="87" IsEnabled="False" Click="discardOrder_Click"/>
+
+
+
+            </Canvas>
+        </TabItem>
+        <TabItem Header="Look Up Order">
+            <Canvas>
+                <Label Margin="23,15,677.4,373.6">Enter Order ID:</Label>
+                <TextBox Name="orderIdTextBox" Height="23" Canvas.Left="118" TextWrapping="Wrap" Canvas.Top="18" Width="168"/>
+                <Button Content="Search" Canvas.Left="316" Canvas.Top="18" Width="75" Height="23" Click="searchOrder_Click"/>
+                <Canvas Name="receiptCanvas" Visibility="Hidden">
+
+                    <ScrollViewer Name="receipt" 
+                          Canvas.Left="28" 
+                          Canvas.Top="100" Height="250" Width="746"
+                          />
+                    <Button Name="RefundButton" Content="Refund" Height="20" Width="70" Canvas.Left="365" Canvas.Top="397" Click="Refund_Click"   />
+                    <Label Content="RECEIPT" Canvas.Left="81" Canvas.Top="47" Width="136" Height="48"/>
+
+
+                </Canvas>
+            </Canvas>
+
+        </TabItem>
+        <TabItem Header="View Inventory Levels">
+            <Canvas>
+                <Button Content="Update" Canvas.Left="23" Canvas.Top="24" Width="75" Height="23" Click="updateStockLevel_Click" RenderTransformOrigin="-3.648,0.817"/>
+
+                <DataGrid Height="330" 
+                          Width="746" 
+                          Canvas.Left="23" 
+                          Canvas.Top="64"
+                          Name="ProductStock" 
+                          AutoGenerateColumns="False"
+                          ScrollViewer.CanContentScroll="True"
+                          HorizontalScrollBarVisibility="Auto" 
+                          VerticalScrollBarVisibility="Auto"
+                          ItemsSource="{Binding}"
+                          CanUserAddRows="false">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name" Width="400" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="SKU" Width="180" Binding="{Binding SKU}"/>
+                        <DataGridTextColumn Header="In-Stock" Width="180" Binding="{Binding Stock}" />
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Canvas>
+        </TabItem>
+    </TabControl>
+</UserControl>
